@@ -1,0 +1,13 @@
+eclipse.preferences.version=1
+encoding//src/Mode/AssociationLine.java=UTF-8
+encoding//src/Mode/ClassObject.java=UTF-8
+encoding//src/Mode/CompositionLine.java=UTF-8
+encoding//src/Mode/GeneralizationLine.java=UTF-8
+encoding//src/Mode/UsecaseObject.java=UTF-8
+encoding//src/Shape/AssociationShape.java=UTF-8
+encoding//src/Shape/ClassShape.java=UTF-8
+encoding//src/Shape/Port.java=UTF-8
+encoding//src/Shape/UsecaseShape.java=UTF-8
+encoding//src/UML/DrawPanel.java=UTF-8
+encoding//src/UML/ModeButton.java=UTF-8
+encoding//src/UML/UML.java=UTF-8

@@ -2,29 +2,44 @@ package Mode;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
 import Shape.ClassShape;
 import UML.DrawPanel;
 import UML.UML;
 
 public class ClassObject extends BasicObject implements ActionListener  {
-	private ClassShape classShape;
+	private boolean isHead = false, isTail = false;
+	// private int x, y;
+	private Select select;
+	// public boolean isSelect = false;
+
+	public ClassObject() {
+		
+	}
+	
+	public ClassObject(int x, int y){
+		
+		this.x = x;
+		this.y = y;
+		shape = new ClassShape(x, y);
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Mode.setMode(Mode.ModeType.CLASS);
 	}
 	
 	@Override
-	public void drawObject(int x, int y) {
-	    classShape = new ClassShape(x, y);
-	    UML.drawPanel.add(classShape);
+	public void drawObject() {
+	    UML.drawPanel.add(shape);
 	    UML.drawPanel.revalidate(); // 重新布局
 	    UML.drawPanel.repaint(); // 刷新绘图
 	}
 	
 	@Override
 	public boolean isHead(int x, int y) {
-		if(classShape.isHead(x, y)) {
+		if(shape.isHead(x, y)) {
 			setHead();	
 			return true;
 		}
@@ -34,7 +49,7 @@ public class ClassObject extends BasicObject implements ActionListener  {
 	
 	@Override
 	public boolean isTail(int x, int y) {
-		if(classShape.isTail(x, y)) {
+		if(shape.isTail(x, y)) {
 			setTail();
 			return true;
 		}
@@ -43,11 +58,34 @@ public class ClassObject extends BasicObject implements ActionListener  {
 	}
 	
 	public void setHead() {
+		isHead = true;
 		DrawPanel.Head = this;
+		
 	}
 	
 	public void setTail() {
+		isTail = true;
 		DrawPanel.Tail = this;
-	}
 
+	}
+	
+	@Override
+	public void setSelected() {
+		isSelect = true;
+		shape.setSelect();
+	}
+	
+	public void unSelected() {
+		isSelect = false;
+		shape.setUnselect();
+	}
+	
+	@Override
+	public void updatePosition(int x, int y) {
+		
+		this.x = x + shape.getX();
+		this.y = y + shape.getY();
+		shape.updatePosition(this.x, this.y);
+	}
+	
 }

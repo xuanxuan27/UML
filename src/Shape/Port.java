@@ -2,27 +2,59 @@ package Shape;
 
 import java.awt.*;
 
-public class Port {
-	private int x;
-    private int y;
-    private int size = 4;
-    private boolean isConnected = false;
+import javax.swing.SwingUtilities;
 
-    // 在指定位置创建端口
-    public Port(int x, int y) {
+import UML.UML;
+
+public class Port {
+	private int x, y;
+    private int size = 4;
+    private Component parent; // 父组件的引用
+
+    private boolean isConnected = false, isVisible = false;
+
+    public Port(int x, int y, Component parent) {
         this.x = x;
         this.y = y;
+        this.parent = parent;
     }
 
-    // 繪製端口
     public void paint(Graphics2D g2d) {
-//        g2d.setColor(Color.white);
-//        g2d.fillOval(x - size / 2, y - size / 2, size, size);
+    	if(isVisible) {
+    		g2d.setColor(Color.white);
+            g2d.fillRect(x, y, size, size);
+            g2d.setColor(Color.white);
+            g2d.drawRect(x, y, size, size);
+    	}
     	
-    	g2d.setColor(Color.white);
-        g2d.fillRect(x, y, size, size);
-        g2d.setColor(Color.white);
-        g2d.drawRect(x, y, size, size);
-        // g2d.drawString(position, x, y - 5);
+    }
+    
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getSize() {
+        return size;
+    }
+    
+    public Component getParent() {
+        return parent;
+    }
+    
+    // 轉換到 drawPanel
+    public Point transform() { 
+    	Point point = SwingUtilities.convertPoint(this.getParent(), new Point(this.x, this.y), UML.drawPanel);
+        return point;
+	}
+    
+    public void setVisible() {
+    	isVisible = true;
+    }
+    public void setInvisible() {
+    	isVisible = false;
     }
 }

@@ -3,15 +3,18 @@ import java.awt.*;
 import javax.swing.*;
 
 import Mode.AssociationLine;
+import Mode.BasicObject;
 import Shape.ClassShape;
+import Action.*;
 
 public class UML {
-    public static JPanel drawPanel; // 声明为类变量以便在各个方法中都能访问
+    public static DrawPanel drawPanel; // 声明为类变量以便在各个方法中都能访问
 	
 	public static void main(String[] args) { 
         JFrame window = new JFrame("My UML Editor");
         window.setSize(800, 600);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
         JPanel basePanel = new JPanel();
         basePanel.setBackground(Color.black);
         JPanel buttonPanel = new JPanel();
@@ -52,10 +55,33 @@ public class UML {
         buttonPanel.add(classBtn);
         buttonPanel.add(usecaseBtn);
         
-//        JPanel circlePanel = new ClassShape(); // 使用自定义的 CirclePanel
-//        circlePanel.setPreferredSize(new Dimension(200, 200)); // 设置面板大小
-//        drawPanel.add(circlePanel);
-//        
+        JMenuBar toolBar = new JMenuBar();
+        toolBar.setFocusable(false); 
+
+        // 创建按钮并添加到工具栏
+        JMenu fileMenu = new JMenu("File");
+        JMenuItem newMenuItem = new JMenuItem("New File");
+        fileMenu.add(newMenuItem);
+
+        JMenu editMenu = new JMenu("Edit");
+        JMenuItem renameMenuItem = new JMenuItem("Rename Object");
+        // BasicObject selectedObject = drawPanel.getSelectedObject();
+        renameMenuItem.addActionListener(new Rename());
+        
+        JMenuItem groupMenuItem = new JMenuItem("Group");
+        groupMenuItem.addActionListener(new Group());
+        JMenuItem upgroupMenuItem = new JMenuItem("Ungroup");
+        upgroupMenuItem.addActionListener(new Ungroup());
+        
+        editMenu.add(renameMenuItem);
+        editMenu.add(groupMenuItem);
+        editMenu.add(upgroupMenuItem);
+
+        toolBar.add(fileMenu);
+        toolBar.add(editMenu);
+
+        // 添加工具栏到主窗口
+        window.getContentPane().add(toolBar, BorderLayout.PAGE_START);
          
         window.setVisible(true);
     }
